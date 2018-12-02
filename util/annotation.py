@@ -30,6 +30,7 @@ def parse_xml(filename):
 
     return result
 
+
 def inspect():
     for file in glob.glob("%s/*.xml" % OUTPUT_DIR):
         annotation = parse_xml(file)
@@ -37,4 +38,3 @@ def inspect():
         if len(annotation["objects"]) == 0:
             shutil.move(file, "./empty")
             print("Empty annotation %s is moved." % file)
-

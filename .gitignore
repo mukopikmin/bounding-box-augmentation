@@ -156,3 +156,5 @@ dmypy.json
 
 output/*
 !output/.keep
+input/*
+!input/.keep
