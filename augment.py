@@ -16,30 +16,33 @@ AUGMENT_SIZE = 10
 
 
 def main():
-    for file in glob.glob("%s/*.xml" % INPUT_DIR):
-        print("Augmenting %s ..." % file)
+    for file in glob.glob('%s/*.xml' % INPUT_DIR):
+        print('Augmenting %s ...' % file)
         annotation = an.parse_xml(file)
         augment(annotation)
+
+    for file in glob.glob('%s/*.xml' % OUTPUT_DIR):
+        an.inspect(file)
 
 
 def augment(annotation):
     seq = sequence.get()
 
     for i in range(AUGMENT_SIZE):
-        filename = annotation["filename"]
-        sp = filename.split(".")
-        outfile = "%s/%s-%02d.%s" % (OUTPUT_DIR, sp[0], i, sp[-1])
+        filename = annotation['filename']
+        sp = filename.split('.')
+        outfile = '%s/%s-%02d.%s' % (OUTPUT_DIR, sp[0], i, sp[-1])
 
         seq_det = seq.to_deterministic()
 
-        image = cv2.imread("%s/%s" % (INPUT_DIR, annotation["filename"]))
+        image = cv2.imread('%s/%s' % (INPUT_DIR, annotation['filename']))
         _bbs = []
         for obj in annotation['objects']:
-            bb = ia.BoundingBox(x1=int(obj["xmin"]),
-                                y1=int(obj["ymin"]),
-                                x2=int(obj["xmax"]),
-                                y2=int(obj["ymax"]),
-                                label=obj["name"])
+            bb = ia.BoundingBox(x1=int(obj['xmin']),
+                                y1=int(obj['ymin']),
+                                x2=int(obj['xmax']),
+                                y2=int(obj['ymax']),
+                                label=obj['name'])
             _bbs.append(bb)
 
         bbs = ia.BoundingBoxesOnImage(_bbs, shape=image.shape)
@@ -49,8 +52,8 @@ def augment(annotation):
             [bbs])[0].remove_out_of_image().cut_out_of_image()
 
         writer = Writer(outfile,
-                        annotation["size"]["width"],
-                        annotation["size"]["height"])
+                        annotation['size']['width'],
+                        annotation['size']['height'])
         for bb in bbs_aug.bounding_boxes:
             writer.addObject(bb.label,
                              int(bb.x1),
@@ -59,8 +62,8 @@ def augment(annotation):
                              int(bb.y2))
 
         cv2.imwrite(outfile, image_aug)
-        writer.save('%s.xml' % outfile.split(".")[0])
+        writer.save('%s.xml' % outfile.split('.')[0])
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

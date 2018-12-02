@@ -30,3 +30,4 @@ Run script.
     pipenv run python augment.py
 
 Augmented images and annotations are generated in `output/`.
+If there is no bounding boxes in the image, Annotation files (`*.xml`) are moved to `empty/`.
