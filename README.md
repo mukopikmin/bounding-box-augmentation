@@ -1,14 +1,15 @@
 # Bounding Box Augmentation
 
 Example of augmentating image with bounding boxes.
-This code is based on [aleju/imgaug](https://github.com/aleju/imgaug)
+This code is based on [aleju/imgaug](https://github.com/aleju/imgaug).
 
-
-Augmentable annotation is Pascal VOC only.
+Augmentable annotation format is Pascal VOC only.
 
 ## Examples
 
 ![original.jpg](docs/original.png)
+
+Above image can be augmented to the following images.
 
 | Example 1 | Example 2 | Example 3 | Example 4 |
 | ---- | ---- | ---- | ---- |
