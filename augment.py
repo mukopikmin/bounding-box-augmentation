@@ -55,6 +55,9 @@ def augment(annotation):
                         annotation['size']['width'],
                         annotation['size']['height'])
         for bb in bbs_aug.bounding_boxes:
+            if int((bb.x2-bb.x1)*(bb.y2-bb.y1)) == 0:
+                print("augmentet boundingbox has non existing area. Skipping")
+                continue
             writer.addObject(bb.label,
                              int(bb.x1),
                              int(bb.y1),
